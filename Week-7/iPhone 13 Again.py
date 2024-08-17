@@ -55,13 +55,13 @@ def main():
     """main"""
     model = input()
     storage = input()
-    if model in "iPhone 13 mini":
+    if model == "iPhone 13 mini":
         iphone13mini(model, storage)
-    elif model in "iPhone 13":
+    elif model == "iPhone 13":
         iphone13(model, storage)
-    elif model in "iPhone 13 Pro":
+    elif model == "iPhone 13 Pro":
         iphone13pro(model, storage)
-    elif model in "iPhone 13 Pro Max":
+    elif model == "iPhone 13 Pro Max":
         iphone13promax(model, storage)
     else:
         print("Not Available")
