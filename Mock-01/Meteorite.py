@@ -1,16 +1,17 @@
 """Meteorite"""
-def main(a, b, c):
+def main():
     """main"""
-    count = 0
-    asteroid_size = a
-    while asteroid_size >= c:
-        count += 1
-        asteroid_size /= b
-        if asteroid_size >= c:
-            count += b - 1
-    return count
-a = float(input())
-b = int(input())
-c = float(input())
-result = main(a, b, c)
-print(result)
+    a = float(input())
+    b = abs(int(input()))
+    c = float(input())
+    meteo = 1
+    shoot_count = 0
+    if not a:
+        print(int(0))
+    else:
+        while a >= c:
+            shoot_count += meteo
+            a /= b
+            meteo *= b
+        print(shoot_count)
+main()
