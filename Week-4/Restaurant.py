@@ -2,7 +2,7 @@
 def main(a, b, c, d):
     """main"""
     if a == b:
-        print(f"Yes")
+        print("Yes")
     elif a < b:
         total = a + d
         discount = total * (c / 100)
