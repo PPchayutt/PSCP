@@ -10,7 +10,7 @@ def main():
     new_line2 = ""
     removed_count = 0
     for char in line2:
-        if removed_count < to_remove and char in ")":
+        if removed_count < to_remove and char == ")":
             new_line2 += " "
             removed_count += 1
         else:
