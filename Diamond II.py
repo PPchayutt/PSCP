@@ -1,3 +1,3 @@
-list1 = ["Pre", "Programming'58"]
-string1 = "-".join(list1)
-print(string1)
+x = [7, 3, 2, 7, 8, 1, 2]
+del x[2:4]
+print(x)
