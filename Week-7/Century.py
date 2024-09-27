@@ -22,3 +22,4 @@ def main(n):
         result = calculate_century(year_input)
         print(result)
 main(int(input()))
+    
