@@ -1,47 +1,46 @@
-"""Volleyball"""
-def calculate_and_print_score(game_string):
-    """calculate"""
-    set_a, set_b = 0, 0
-    score_a, score_b = 0, 0
-    current_set = 1
+"""volleyball"""
+def comp(awin, bwin, val):
+    """compare"""
+    return awin >= val or bwin >= val
 
-    for point in game_string:
-        if point == 'A':
-            score_a += 1
-        else:
-            score_b += 1
+def tied(awin, bwin):
+    """tied"""
+    return abs(awin - bwin) >= 2
 
-        if current_set < 5:
-            if (score_a >= 25 or score_b >= 25) and abs(score_a - score_b) >= 2:
-                print(f"Set {current_set}: A ({score_a}) | B ({score_b})")
-                if score_a > score_b:
-                    set_a += 1
-                else:
-                    set_b += 1
-                score_a, score_b = 0, 0
-                current_set += 1
-        else:
-            if (score_a >= 15 or score_b >= 15) and abs(score_a - score_b) >= 2:
-                print(f"Set {current_set}: A ({score_a}) | B ({score_b})")
-                if score_a > score_b:
-                    set_a += 1
-                else:
-                    set_b += 1
+def volley(val, awin=0, bwin=0, teama=0, teamb=0):
+    """volleybal"""
+    string = ""
+    add = 0
+    end_game = False
+    while len(val):
+        for i in val:
+            if (comp(awin, bwin, 25) and tied(awin, bwin) and add <= 3):
+                end_game = True
                 break
-
-    if score_a > 0 or score_b > 0:
-        print(f"Set {current_set}: A ({score_a}) | B ({score_b})")
-
-    if current_set < 5 and score_a == 0 and score_b == 0:
-        print(f"Set {current_set}: A (0) | B (0)")
-
-    if set_a == 3:
-        print(f"A won {set_a}:{set_b} set")
-    elif set_b == 3:
-        print(f"B won {set_b}:{set_a} set")
-    else:
+            if (comp(awin, bwin, 15) and tied(awin, bwin) and add == 4):
+                end_game = True
+                break
+            if i == "A":
+                awin += 1
+            elif i == "B":
+                bwin += 1
+            string += i
+        add += 1
+        if awin > bwin:
+            teama += 1
+        else:
+            teamb += 1
+        if add <= 5:
+            print(f"Set {add}: A ({awin}) | B ({bwin})")
+        val = val.replace(string, "", 1)
+        if add >= 4 and end_game and teama - teamb or (abs(teama - teamb) == 3):
+            print(f"A won {teama}:{teamb} set" * (teama > teamb) +
+                  f"B won {teamb}:{teama} set" * (teama < teamb))
+            break
+        end_game = False
+        awin = 0
+        bwin = 0
+        string = ""
+    if not end_game:
         print("The game has not finished yet.")
-
-game_string = input()
-
-calculate_and_print_score(game_string)
+volley(input() + " ")

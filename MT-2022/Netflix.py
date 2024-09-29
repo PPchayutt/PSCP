@@ -1,58 +1,107 @@
 """Netflix"""
-def recommend_netflix_plan():
-    """recommend_netflix_plan"""
-    screens = int(input())
-    downloads = int(input())
-    unlimited = input()
-    mobile_tablet = input()
-    laptop_tv = input()
-    hd = input()
-    ultra_hd = input()
+def func_pre(numsame, numload):
+    """premium"""
+    ans = max(numsame, numload) // 4
+    ans1 = max(numsame, numload) % 4
+    if ans1 > 0:
+        ans += 1
+    print(f"Premium x {ans}")
+    print(f"Total = {ans * 419} THB")
 
-    def mobile(): return (1, 1, True, True, False, False, False, 99)
-    def basic(): return (1, 1, True, True, True, False, False, 279)
-    def standard(): return (2, 2, True, True, True, True, False, 349)
-    def premium(): return (4, 4, True, True, True, True, True, 419)
-
-    def meets_requirements(plan):
-        """meets_requirements"""
-        return (screens <= plan[0] and downloads <= plan[1] and
-                (unlimited == "No" or plan[2]) and
-                (mobile_tablet == "No" or plan[3]) and
-                (laptop_tv == "No" or plan[4]) and
-                (hd == "No" or plan[5]) and
-                (ultra_hd == "No" or plan[6]))
-
-    recommended_plans = ""
-    total_cost = 0
-    remaining_screens = screens
-
-    if meets_requirements(premium()):
-        premium_count = (remaining_screens - 1) // 4 + 1
-        recommended_plans += f"Premium x {premium_count}\n"
-        total_cost += premium_count * premium()[7]
-        remaining_screens -= premium_count * 4
-
-    if remaining_screens > 0 and meets_requirements(standard()):
-        standard_count = (remaining_screens - 1) // 2 + 1
-        recommended_plans += f"Standard x {standard_count}\n"
-        total_cost += standard_count * standard()[7]
-        remaining_screens -= standard_count * 2
-
-    if remaining_screens > 0 and meets_requirements(basic()):
-        basic_count = remaining_screens
-        recommended_plans += f"Basic x {basic_count}\n"
-        total_cost += basic_count * basic()[7]
-
-    if not recommended_plans and meets_requirements(mobile()):
-        mobile_count = screens
-        recommended_plans += f"Mobile x {mobile_count}\n"
-        total_cost += mobile_count * mobile()[7]
-
-    if recommended_plans:
-        print(recommended_plans, end="")
-        print(f"Total = {total_cost} THB")
+def func_std(numsame, numload):
+    """standard"""
+    howmany = 0
+    rnd = 0
+    howmuch = 0
+    if max(numsame, numload) > 2:
+        ans = max(numsame, numload) // 4
+        if max(numsame, numload) - (ans * 4) == 3:
+            ans += 1
+            rnd = 1
+        print(f"Premium x {ans}")
+        howmany = max(numsame, numload) - (ans * 4)
+        howmuch = ans * 419
+        rnd += 1
+    if howmany > 0 or not rnd:
+        if not rnd :
+            ans = max(numsame, numload) // 2
+            print(f"Standard x {ans}")
+            print(f"Total = {ans * 349} THB")
+        else:
+            ans = howmany // 2
+            ans1 = howmany % 2
+            if ans1 > 0:
+                ans += 1
+            print(f"Standard x {ans}")
+            howmuch = howmuch + (ans * 349)
+            print(f"Total = {howmuch} THB")
     else:
-        print("No suitable plan found.")
+        print(f"Total = {howmuch} THB")
 
-recommend_netflix_plan()
+def func_bsc(numsame, numload):
+    """basic"""
+    ans = 0
+    howmuch = 0
+    howmany = 0
+    rnd = 0
+    if max(numsame, numload) > 2:
+        ans = max(numsame, numload) // 4
+        if max(numsame, numload) - (ans * 4) == 3:
+            ans += 1
+            rnd = 1
+        print(f"Premium x {ans}")
+        howmany = max(numsame, numload) - (ans * 4)
+        howmuch = ans * 419
+        rnd = 1
+    if howmany > 1 or (max(numsame, numload) > 1 and not rnd):
+        if not rnd:
+            ans = max(numsame, numload) // 2
+            print(f"Standard x {ans}")
+            print(f"Total = {ans * 349} THB")
+            howmany = ans - (ans * 2)
+            howmuch = howmuch + (ans * 349)
+            rnd = 2
+        else:
+            ans = howmany // 2
+            print(f"Standard x {ans}")
+            howmany = howmany - (ans * 2)
+            howmuch = howmuch + (ans * 349)
+            rnd = 1
+    if howmany > 0 or not rnd:
+        if not rnd:
+            ans = max(numsame, numload)
+            print(f"Basic x {ans}")
+            print(f"Total = {ans * 279} THB")
+        else:
+            print(f"Basic x {howmany}")
+            howmuch = howmuch + (howmany * 279)
+            print(f"Total = {howmuch} THB")
+    elif rnd == 1:
+        print(f"Total = {howmuch} THB")
+
+def func_mb(numsame, numload):
+    """mobile"""
+    ans = max(numsame, numload)
+    print(f"Mobile x {ans}")
+    print(f"Total = {ans * 99} THB")
+
+def main():
+    """main"""
+    numsame = int(input())
+    numload = int(input())
+    ulimited = input().lower()
+    inmobile = input().lower()
+    intv = input().lower()
+    nhd = input().lower()
+    uhd = input().lower()
+    if not max(numsame, numload):
+        print("What do you want?\nTotal = 0")
+    elif uhd == "yes":
+        func_pre(numsame, numload)
+    elif nhd == "yes":
+        func_std(numsame, numload)
+    elif intv == "yes":
+        func_bsc(numsame, numload)
+    elif ulimited != "1" and inmobile != "1":
+        func_mb(numsame, numload)
+main()
