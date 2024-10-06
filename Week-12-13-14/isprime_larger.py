@@ -1,19 +1,22 @@
 """isprime_larger"""
 import math
 def is_prime(num):
-    """return true if prime"""
-    if num <= 1:
+    """return prime"""
+    if num < 2:
         return False
-    for i in range(2,int(math.sqrt(num))+1):
+    if num == 2:
+        return True
+    if not num % 2:
+        return False
+    sqrt_num = int(math.sqrt(num)) + 1
+    for i in range(3, sqrt_num, 2):
         if not num % i:
             return False
     return True
+
 def main():
     """main"""
     num = int(input())
-    check = is_prime(num)
-    if check:
-        print("True")
-    else:
-        print("False")
+    result = "True" if is_prime(num) else "False"
+    print(result)
 main()
